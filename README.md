@@ -11,7 +11,9 @@
 
 2.  数据源在Excel文件内，**保持格式不变**。 `后续视实际数据更新代码`
 
-3.  网页展示效果请访问 [Demo](http://wberlin.cn:9999)  `更新可能不及时`
+3.  网页展示效果请访问 [Demo](http://wberlin.cn:9999)  
+
+4.  代码更新以[Commodity_table.ipynb](https://github.com/Aureliano-Berlindia/Commodity_table/blob/master/commodity_table.ipynb)为准, py文件和网页Demo更新可能不及时
 
 ---
 
@@ -29,4 +31,4 @@
 
 **基于JupyterLab**
 
-<img src="https://raw.githubusercontent.com/Aureliano-Berlindia/Commodity_table/master/demo_gif.gif" align="right">
+<img src="https://raw.githubusercontent.com/Aureliano-Berlindia/Commodity_table/master/demo_gif.gif" align="center">
