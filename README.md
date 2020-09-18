@@ -1,4 +1,4 @@
-# 🌈爬虫商品展示初版
+# ✨爬虫商品展示初版
    *Commodity Table Demo，still developing*
    
 ---
@@ -29,6 +29,7 @@
 ## 👀使用演示
 
 **基于JupyterLab**
+
 `GIF图无法显示请使用VPN`
 
 <img src="https://raw.githubusercontent.com/Aureliano-Berlindia/Commodity_table/master/demo_gif.gif" align="center">
