@@ -1,5 +1,8 @@
 # Commodity_table
 
+爬虫商品展示初版。通过Brand-Country-Model控制第一列的展示商品。
+
+
 1. jupyterLab 环境编写，生产环境内把app = JupyterDash(__name__)改为Dash(__name__),  app.run_server(mode = "jupyterlab") 不加mode
 
 
