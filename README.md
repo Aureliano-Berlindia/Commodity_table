@@ -15,8 +15,8 @@
 
 ## 目前功能
 
-1 通过Brand筛选Country选项列表，反之亦然
-2 通过Brand & Country 筛选Model列表
-3 Model callback中使用Brand,Country,Model确定唯一商品，展示在第一列
-4 设置初始显示商品
-5 在选中指定商品后再选择All，目前显示商品不变
+1. 通过Brand筛选Country选项列表，反之亦然
+2. 通过Brand & Country 筛选Model列表
+3. Model callback中使用Brand,Country,Model确定唯一商品，展示在第一列
+4. 设置初始显示商品
+5. 在选中指定商品后再选择All，目前显示商品不变
