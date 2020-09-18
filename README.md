@@ -29,5 +29,6 @@
 ## 👀使用演示
 
 **基于JupyterLab**
+`GIF图无法显示请使用VPN`
 
 <img src="https://raw.githubusercontent.com/Aureliano-Berlindia/Commodity_table/master/demo_gif.gif" align="center">
