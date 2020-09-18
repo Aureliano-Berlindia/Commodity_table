@@ -30,4 +30,4 @@
 
 **基于JupyterLab**
 
-<img src="https://raw.githubusercontent.com/Aureliano-Berlindia/Commodity_table/master/demo_gif.gif" align="center">
+<img src="https://b-watermark-1300908279.cos.ap-beijing.myqcloud.com/demo_gif.gif" align="center">
