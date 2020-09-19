@@ -26,6 +26,15 @@
 
 ---
 
+## 🚀Updates:
+```
+ 9.18 fix the bug that dropdown shows 'undefined' in some situations.
+ 
+ 9.19 add feature: now the table could select & display two commodities at once.
+```
+
+---
+
 ## 👀使用演示
 
 **基于JupyterLab**
