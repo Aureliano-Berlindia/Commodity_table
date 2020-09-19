@@ -31,6 +31,7 @@
  9.18 fix the bug that dropdown shows 'undefined' in some situations.
  
  9.19 add feature: now the table could select & display two commodities at once.
+      add feature: edit Font/size/family
 ```
 
 ---
