@@ -1,0 +1,67 @@
+/********** HTML **********/
+#body {
+    background-color: rgba(41, 41, 41, 1);
+    display: block;
+    margin: auto;
+}
+
+
+/********** Header **********/
+Header {
+    text-align: center;
+    height: 220px;
+    font-family: "Arial Black";
+    display: block;
+}
+
+#all-brand-drop-down {
+    display:inline-flex;
+    width:100%;
+}
+
+#all-country-drop-down {
+    display:inline-flex;
+    width:100%;
+}
+
+#all-model-drop-down {
+    display:inline-flex;
+    width:100%;
+}
+
+/********** Certain Dropdown ********/
+
+#brand-dropdown-1{
+    width:40%;
+}
+
+#brand-dropdown-2{
+    width:40%;
+}
+
+#country-dropdown-1{
+    width:40%;
+}
+
+#country-dropdown-2{
+    width:40%;
+}
+
+
+#model-dropdown-1 {
+    width:40%; 
+}
+
+#model-dropdown-2 {
+    width:40%; 
+}
+
+#cell-markdown {
+    text-align:center
+}
+
+p{
+    text-align:center;
+    font-size:15px;
+    font-family:Times New Roman;
+}
