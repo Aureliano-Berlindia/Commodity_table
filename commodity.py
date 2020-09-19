@@ -6,16 +6,21 @@ import dash_core_components as dcc
 import dash_html_components as html
 
 
+app = dash.Dash(__name__)
+server = app.server
+
 df = pd.read_excel('Bosch_UK_BEL523MS0B_AllInfo_Example.xlsx',
                    sheet_name=1,index_col =0)
-                   
+
+
 #设置列名格式为 “品牌-国家-型号”
 cols = []
 for i in range(df.shape[1]):
     cols.append(df.loc['Brand'][i] + ' ' + df.loc['Country'][i] + ' ' +df.loc['Mode'][i])
-    
+
 df.columns = cols
 
+#提取产品图片链接
 for i in range(df.shape[1]):
     if re.search(r'(.+),',df.loc['Image Url'][i]):
         df.loc['Image Url'][i] = '![mwo](' + re.findall(r'(.+),',df.loc['Image Url'][i])[0] + ')'
@@ -24,26 +29,38 @@ for i in range(df.shape[1]):
 
 df = df.reset_index()
 
+mod1 = 'Siemens UK S1'
+mod2 = 'Siemens UK S2'
 
-app = dash.Dash(__name__)
-server = app.server
-
-#初始值
-mod = 'Siemens UK S1'
-
-def commodity_table(brand,country,model):
-    global mod
-    if brand=='All Brands of Region' or country =='All Regions of Brands':
+def commodity_table(b1,c1,m1,b2,c2,m2):
+    global mod1
+    global mod2
+    if b1=='All Brands of Region' or c1 =='All Regions of Brands':
             None
     else:
-        mod = brand + ' ' + country + ' '+ model
+        mod_selected_1 = b1 + ' ' + c1 + ' '+ m1
+        if mod_selected_1 in df.columns:
+            mod1 = mod_selected_1
+        else:
+            None
+            
+    if b2=='All Brands of Region' or c2 =='All Regions of Brands':
+            None
+    else:
+        mod_selected_2 = b2 + ' ' + c2 + ' '+ m2
+        if mod_selected_2 in df.columns:
+            mod2 = mod_selected_2
+        else:
+            None
+        
+        
     table =  dash_table.DataTable(
     id='table',
     columns=[
         {"name": 'ProItem', "id": 'ProItem','presentation':'markdown'},
-        {"name": 'Model 1', "id": mod, 'presentation': 'markdown'}, #, 'presentation': 'markdown'
-        {"name": 'Model 2', "id": 'Siemens UK S1', 'presentation': 'markdown'},
-        #{"name": 'Model 2', "id": 'Model2', 'presentation': 'markdown'},       
+        {"name": mod1, "id": mod1, 'presentation': 'markdown'}, #, 'presentation': 'markdown'
+        {"name": mod2, "id": mod2, 'presentation': 'markdown'},
+        #{"name": 'Model 3', "id": 'Model3', 'presentation': 'markdown'},       
     ],
     style_data_conditional=[
         {
@@ -83,44 +100,63 @@ app.layout = html.Div(
             #品牌下拉框
                 html.Div([
                     dcc.Dropdown(
-                    id='brand-dropdown',
+                    id='brand-dropdown-1',
                     options=[{'label': k, 'value': k} for k in brands],
-                value='All Brands of Region',
-                ),
-                html.Div(id='dd-output-container')
-                ],
-                className = 'drop-down'),
+                    value='All Brands of Region',
+                    ),
+                    html.Br(),
+                    
+                    #second brand
+                    dcc.Dropdown(
+                    id='brand-dropdown-2',
+                    options=[{'label': k, 'value': k} for k in brands],
+                    value='All Brands of Region',
+                    )],
+                id = 'all-brand-drop-down'),
+            
                 html.Br(),  
             
                 #国家下拉框
                 html.Div([
                     dcc.Dropdown(
-                    id='country-dropdown',
+                    id='country-dropdown-1',
                     options = [{'label':i,'value':i} for i in counts],
                     value = 'All Regions of Brands'
-                ),
-                html.Div(id='dd-output-container-brand')
+                    ),
+                    html.Div(id='dd-output-container-brand'),
+                    dcc.Dropdown(
+                    id='country-dropdown-2',
+                    options = [{'label':i,'value':i} for i in counts],
+                    value = 'All Regions of Brands'
+                    ),
                 ],
-                className = 'drop-down'),
+                id = 'all-country-drop-down'),
                 html.Br(),
             
                 #型号下拉框
                 html.Div([
                     dcc.Dropdown(
-                    id='model-dropdown',
-                #disabled = False,
-                value='S1'
-                ),
-                html.Div(id='dd-output-container-model')
-                ]),
+                    id='model-dropdown-1',
+                    #disabled = False,
+                    value='S1'
+                    ),
+                    dcc.Dropdown(
+                    id='model-dropdown-2',
+                    #disabled = False,
+                    value='S1'
+                    ),
+                    
+                ],
+                id = 'all-model-drop-down'),
+                html.Div(id='dd-output-container-model'),
                 html.Br(),
             ]
         )
 
 #根据品牌更新国家dropdown
 @app.callback(
-    dash.dependencies.Output('country-dropdown', 'options'),
-    [dash.dependencies.Input('brand-dropdown', 'value')])
+    dash.dependencies.Output('country-dropdown-1', 'options'),
+    [dash.dependencies.Input('brand-dropdown-1', 'value')])
 def set_country_options(selected_brand):
     if selected_brand == 'All Brands of Region':
         country_list = [{'label': i, 'value': i} for i in counts]
@@ -131,11 +167,10 @@ def set_country_options(selected_brand):
     return country_list
 
 
-
 #根据国家更新品牌dropdown
 @app.callback(
-    dash.dependencies.Output('brand-dropdown', 'options'),
-    [dash.dependencies.Input('country-dropdown', 'value')])
+    dash.dependencies.Output('brand-dropdown-1', 'options'),
+    [dash.dependencies.Input('country-dropdown-1', 'value')])
 def set_country_options(selected_country):
     if selected_country == 'All Regions of Brands':
         brand_list = [{'label': i, 'value': i} for i in brands]
@@ -146,23 +181,68 @@ def set_country_options(selected_country):
 
 #设置型号option
 @app.callback(
-    dash.dependencies.Output('model-dropdown', 'options'),
-    [dash.dependencies.Input('brand-dropdown', 'value'),
-    dash.dependencies.Input('country-dropdown', 'value')])
+    dash.dependencies.Output('model-dropdown-1', 'options'),
+    [dash.dependencies.Input('brand-dropdown-1', 'value'),
+    dash.dependencies.Input('country-dropdown-1', 'value')])
 def set_model_option(brand,country):
     option_list = [{'label': i, 'value': i} for i in dft[(dft['Brand']==brand) & (dft['Country']==country)]['Model'].tolist()]
     return option_list
 
+
+##################### 第二列商品 ###############################
+#根据品牌更新国家dropdown
+@app.callback(
+    dash.dependencies.Output('country-dropdown-2', 'options'),
+    [dash.dependencies.Input('brand-dropdown-2', 'value')])
+def set_country_options(selected_brand):
+    if selected_brand == 'All Brands of Region':
+        country_list = [{'label': i, 'value': i} for i in counts]
+    else:
+        country_list = [{'label': i, 'value': i} for i in dft[dft['Brand']==selected_brand]['Country'].unique().tolist()]
+        country_list.insert(0,{'label':'All Regions of Brands' , 'value': 'All Regions of Brands'})
+        
+    return country_list
+
+
+#根据国家更新品牌dropdown
+@app.callback(
+    dash.dependencies.Output('brand-dropdown-2', 'options'),
+    [dash.dependencies.Input('country-dropdown-2', 'value')])
+def set_country_options(selected_country):
+    if selected_country == 'All Regions of Brands':
+        brand_list = [{'label': i, 'value': i} for i in brands]
+    else:
+        brand_list = [{'label': i, 'value': i} for i in dft[dft['Country']==selected_country]['Brand'].unique().tolist()]
+        brand_list.insert(0,{'label': 'All Brands of Region', 'value': 'All Brands of Region'})
+    return brand_list
+
+#设置型号option
+@app.callback(
+    dash.dependencies.Output('model-dropdown-2', 'options'),
+    [dash.dependencies.Input('brand-dropdown-2', 'value'),
+    dash.dependencies.Input('country-dropdown-2', 'value')])
+def set_model_option(brand,country):
+    option_list = [{'label': i, 'value': i} for i in dft[(dft['Brand']==brand) & (dft['Country']==country)]['Model'].tolist()]
+    return option_list
+
+
+#########################################################
+
 #根据B,C,M返回text , table
 @app.callback(
     dash.dependencies.Output('dd-output-container-model', 'children'),
-    [dash.dependencies.Input('brand-dropdown', 'value'),
-     dash.dependencies.Input('country-dropdown', 'value'),
-    dash.dependencies.Input('model-dropdown', 'value')])
+    [dash.dependencies.Input('brand-dropdown-1', 'value'),
+     dash.dependencies.Input('country-dropdown-1', 'value'),
+    dash.dependencies.Input('model-dropdown-1', 'value'),
+    dash.dependencies.Input('brand-dropdown-2', 'value'),
+    dash.dependencies.Input('country-dropdown-2', 'value'),
+    dash.dependencies.Input('model-dropdown-2', 'value')])
 
-def update_output(brand,country,model):
-    return 'Brand:{}, Country:{}, Model:{}'.format(brand,country,model),commodity_table(brand,country,model)
+def update_output(b1,c1,m1,b2,c2,m2):
+    return "B1: {}, C1: {}, M1: {} B2: {} ,C2: {}, M2: {}".format(b1,c1,m1,b2,c2,m2),commodity_table(b1,c1,m1,b2,c2,m2)
 
+#,commodity_table(brand,country,model)
 
+    
 if __name__ == '__main__':
     app.run_server(debug=True)
