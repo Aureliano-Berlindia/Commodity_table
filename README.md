@@ -32,6 +32,8 @@
  
  9.19 add feature: now the table could select & display two commodities at once.
       add feature: edit Font/size/family
+      
+ 9.21 add feature: add 'show_more' option, now the table only display 10 rows by default.
 ```
 
 ---
