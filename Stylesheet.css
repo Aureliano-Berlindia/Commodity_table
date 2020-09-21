@@ -1,0 +1,83 @@
+/********** HTML **********/
+#body {
+    background-color: rgba(41, 41, 41, 1);
+    display: block;
+    margin: auto;
+}
+
+h1 {
+    text-align:center;
+    color:rgb(229 1 18 / 1);
+}
+
+/********** Header **********/
+Header {
+    text-align: center;
+    height: 220px;
+    font-family: "Arial Black";
+    display: block;
+}
+
+#all-brand-drop-down {
+    display:inline-flex;
+    width:80%;
+    float:right;
+}
+
+#all-country-drop-down {
+    display:inline-flex;
+    width:80%;
+    float:right;
+}
+
+#all-model-drop-down {
+    display:inline-flex;
+    width:80%;
+    float:right;
+}
+
+/********** Certain Dropdown ********/
+
+#brand-dropdown-1{
+    width:33.33%;
+}
+
+#brand-dropdown-2{
+    width:33.33%;
+}
+
+#country-dropdown-1{
+    width:33.33%;
+}
+
+#country-dropdown-2{
+    width:33.33%;
+}
+
+
+#model-dropdown-1 {
+    width:33.33%; 
+}
+
+#model-dropdown-2 {
+    width:33.33%;
+}
+
+#cell-markdown {
+    text-align:center
+}
+
+
+
+/******** Table *********/
+
+#dd-output-container-model {
+    display:inline-flex;
+}
+
+
+p{
+    text-align:center;
+    font-size:15px;
+    font-family:Times New Roman;
+}
